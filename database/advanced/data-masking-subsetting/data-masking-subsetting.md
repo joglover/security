@@ -86,14 +86,14 @@ Create an ADM and associate it with a target database and schema. This ADM will 
 
 ### Steps
 1. Navigate to **Data Discovery > Application Data Models**. Click **Create** to add a new ADM.  
-Fill in the following details:
- - Name: *`Employee_ADM`*.
- - Target Type: *`Pluggable Database`*.
- - Target Database: *`cdb1_PDB1`*.
- - Database Named Credentials: *`DMS_ADMIN`*.
- - Application Suite: *`Custom`*(default).
- - Schemas: *`EMPLOYEESEARCH_DEV`* (Type in the text and select from the drop-down options).
- - Relationship Discovery Type: *`Database Level (Dictionary-Based)`* (default).
+    Fill in the following details:
+    - Name: *`Employee_ADM`*.
+    - Target Type: *`Pluggable Database`*.
+    - Target Database: *`cdb1_PDB1`*.
+    - Database Named Credentials: *`DMS_ADMIN`*.
+    - Application Suite: *`Custom`* (default).
+    - Schemas: *`EMPLOYEESEARCH_DEV`* (Type in the text and select from the drop-down options).
+    - Relationship Discovery Type: *`Database Level (Dictionary-Based)`* (default).
 
 ![DMS](./images/dms-124.png "102")
 
@@ -120,13 +120,16 @@ Run the **Discover Sensitive Columns** job: To identify sensitive columns, run t
 
     ![DMS](./images/dms-013.png "13")
 
-3. Now, click **Schedule** shown under **Sensitive Column Discovery Jobs** page:
+3. Now, click **Full discovery** shown under **Sensitive Column Discovery Jobs** page:
     
-    ![DMS](./images/dms-014.png "14")
+    ![DMS](./images/dms-014(1).png "14")
 
     Please note the two sections in the image above: **Sensitive Column Discovery Jobs** and **Discovered Columns**.
     - **Sensitive Column Discovery Jobs:** Shows a list of discovery jobs.
     - **Discovered Columns:** When you highlight any discovery job, this section will display a list of discovered columns for that job.  
+
+    **Note**:  
+    - Incremental discovery can be performed to discover new columns since the last full discovery run. You can expand the scope of incremental discovery to additional schemas in the target database.  
 
 4. Fill in the following details on the **Create Sensitive Column Discovery Job** page:
 
@@ -140,16 +143,16 @@ Run the **Discover Sensitive Columns** job: To identify sensitive columns, run t
     - Sensitive types are organized into 8 different categories for easier navigation - Academic, Biographic, Employment, Financial, Healthcare, Identification, Information Technology, and User Defined.
      
 
-5. Click **Submit**. Check the discovery job status by pressing the **Refresh** button and move forward when status shows **Succeeded**! Highlight the succeeded Discovery Job and notice ten sensitive columns discovered and shown under the **Discovered Columns** section. 
+5. Click **Submit**. Check the discovery job status by pressing the **Refresh** button and move forward when status shows **Succeeded**! Highlight the succeeded Discovery Job and notice eleven sensitive columns discovered and shown under the **Discovered Columns** section. 
 
-    ![DMS](./images/dms-112(3).png "16")
+    ![DMS](./images/dms-112(5).png "16")
 
 6. **Sensitive Status** for discovered columns is **Sensitive** by default. Here, you have the flexibility to update the status to *`Not Sensitive`* or *`Undefined`*, depending on your requirement. 
-For this task, select the three *`User ID`* sensitive type columns shown below and selct **Mark Not Sensitive**.
+For this task, select the four *`User ID`* and one *`Email ID`* sensitive type columns shown below and select **Mark Not Sensitive**.
 
-![DMS](./images/dms-113(4).png "17")
+![DMS](./images/dms-113(5).png "17")
 
-Notice that the **Sensitive Status** has been changed from *`SENSITIVE`* to *`NOT_SENSITIVE`* for three rows.  
+Notice that the **Sensitive Status** has been changed from *`SENSITIVE`* to *`NOT_SENSITIVE`* for five rows.  
 
 7. Click **Close**. Now, your ADM is populated with sensitive columns *`EMAIL`*, *`USERID`* and *`PASSWORD`* from different objects.
 
@@ -184,9 +187,8 @@ Create a new Masking Definition under **Data Masking** where the masking formats
 - Associated Database: *`cdb1_PDB1.`*
 - Database Named Credentials: *`DMS_ADMIN.`*
 
-    ![DMS](./images/dms-022.png "22")  
-    
-    
+![DMS](./images/dms-022.png "22")  
+
 4. Click **Next**.  
 
 5. On the next screen, notice the discovered sensitive columns along with assigned masking formats.
@@ -196,57 +198,21 @@ Create a new Masking Definition under **Data Masking** where the masking formats
 
     ![DMS](./images/dms-114(4).png "23")  
     
-    Now, let’s define the masking formats for the remaining two columns that do not yet have assigned formats.
-
-6. Select the **EMAIL** column in *`DEMO_HR_EMPLOYEES`*, then click the **Define Masking Format** option at the top.
-
-    ![DMS](./images/dms-115(4).png "24")
-
-7. On the **Define Masking Format** page, select **Email Address** from the **Choose From Masking Formats** drop-down box, and click **Import**.
-
-   ![DMS](./images/dms-115(5).png "24")
-
-8. The Masking Format Entries is automatically populated. View the sample data by clicking **Generate** under **Sample Data**:
-
-    ![DMS](./images/dms-116(4).png "25")
-
-9. Click **Save**. Notice the *`EMAIL`* column now has the defined masking format:
-
-
-Stay on the **Create Masking Definition** page to define the format for the other column- *`USERID`* as shown in the next steps.
-
-10. For **USERID** column:  Select the **USERID** column in *`DEMO_HR_EMPLOYEES`*, then click the **Define Masking Format** option at the top.
-
-    ![DMS](./images/dms-117(5).png "27")
-
-    **Note**: You can define masking formats for multiple columns together with the same data type.
-
- - On the *`Define Masking Format`* page, choose **Custom Format Entry** as **Random Numbers** and enter *`Start Integer`* and *`End Integer`* as *`101`* and *`1999`*.
- - Click **Add Format Entry**.
+    Masking formats for all the columns are automatically assigned. Here, if needed, you can edit the format by clicking **Define Masking Format**.
     
-    ![DMS](./images/dms-118(3).png "028")
+6. Click **Next**.
 
-- click **Save**.  
-
-    ![DMS](./images/dms-118(4).png "028")
-
-11. Notice that all columns for **EMAIL**, **USERID** and **PASSWORD** now have masking formats assigned.
-        
-    ![DMS](./images/dms-121(5).png "31")
-       
-12. Click **Next**.
-
-13. Users have an option to add a pre-masking script and a post-masking script. For this task, however, you can leave it empty.
+7. You have an option to add a pre-masking script and a post-masking script. For this task, however, you can leave it empty.
 
 **Note**:
     - Use the **Pre Mask Script** text box to specify any SQL script that must run before masking starts.
     - Use the **Post Mask Script** text box to specify any SQL script that must run after masking completes.  
     
-14. Click **Next**.
+8. Click **Next**.
 
-15. Click **Create** on the next page. A new Masking Definition is created.
+9. Click **Create** on the next page. A new Masking Definition is created.
 
-    ![DMS](./images/dms-032(2).png "32")
+    ![DMS](./images/dms-012(c).png "32")
 
 **What You Accomplished:**  
 A new Masking Definition for sensitive columns EMAIL, USERID and PASSWORD in the *`Employee_Data_Mask`* is created, where the automatically assigned masking formats are reviewed and the remaining ones are added.
@@ -306,8 +272,9 @@ Fill in the below details:
  - Data Masking Option: **In-Database Masking** (we are choosing In-Database for this lab).
  - Associated Database: *`cdb1_PDB1`*.
  - Database Named Credential: *`DMS_ADMIN`*.  
+ - Run **Pre-Masking Check** if it has not been performed previously.
  
-    ![DMS](./images/dms-034.png "34")  
+    ![DMS](./images/dms-034(1).png "34")  
     
     
 3. Click **Generate**.  
@@ -329,11 +296,11 @@ Notice that the **Most Recent Job Status** has changed to *`Script Generated`* f
 **Step 4(a).** If you are using the embedded remote desktop:  
 
 i. Generate SSH Keys  
-- From your noVNC remote desktop session, open a **Terminal** session:
+- From your noVNC remote desktop session, open a **Terminal** session:  
 
-![DMS](./images/dms-122.png "36")
+![DMS](./images/dms-122.png "36")  
 
- Run the following to generate the key pair:  
+- Run the following to generate the key pair:  
 
     ````
     <copy>
@@ -370,7 +337,7 @@ ii. Update the Host Named Credential with the new SSH Key:
        
         ![DMS](./images/dms-039.png "39")
 
-    - Under SSH Private Key, upload the key by clicking **Choose File**. On the file browser, navigate to **Other Locations > tmp** and select the file *`rsa_priv`*.
+    - Under SSH Private Key, upload the key by clicking **Choose File**. On the file browser, navigate to **Other Locations > Computer > tmp** and select the file *`rsa_priv`*.
 
         ![DMS](./images/dms-040.png "40")
 
@@ -413,8 +380,9 @@ Fill in the following details on the **Schedule Data Masking Job: Basic Details
    - Database Named Credentials: *`DMS_ADMIN`*.
    - Host Named Credentials: *`OS_ORACLE_SSH`*
    - Select the checkbox for **Selected Database is not a production database**.
+   - Run **Pre-Masking Check** if it has not been done previously.
 
-![DMS](./images/dms-044.png "44")  
+![DMS](./images/dms-044(1).png "44")  
 
 7. Click **Next**.
 
@@ -628,9 +596,9 @@ Now, all 4 defined Object Rules should show as below:
 
     **Note:**
     - Here, you can see the **Source and Estimated Subset Size** (in MB and number of rows).
-    - Since the tables are interdependent, you will see the effects of subsetting on parent-child tables. In this example, *`DEMO_HR_EMPLOYEES`* retains 25% of its rows as previously defined. However, due to its dependency on the *`DEMO_HR_SUPPLEMENTAL_DATA`* table, this table is also affected by the subsetting and will retain 71% of its rows.
+    - Since the tables are interdependent, you will see the effects of subsetting on parent-child tables. In this example, *`DEMO_HR_EMPLOYEES`* retains 25% of its rows as previously defined. However, due to its dependency on the *`DEMO_HR_SUPPLEMENTAL_DATA`* table, this table is also affected by the subsetting and will retain 68% of its rows.
 
-You may stop here if you only need to subset your data. However, we will proceed by **associating the Data Masking script** previously generated to demonstrate how subsetting and masking can be combined in a single process.
+You may stop here if you only need to subset your data. However, we will proceed by **associating the Data Masking script** previously generated to demonstrate how subsetting and masking can be combined in a single process..
 
 **Associate the previously generated Masking Definition**  
 
@@ -903,7 +871,7 @@ This task ensures a clean environment for future exercises and prevents any pote
 
     - Select each Data Subsetting Definition and click **Delete** at the top.
         
-        ![DMS](./images/dms-095.png "Delet all the Data Subsetting Definition")
+        ![DMS](./images/dms-095.png "Delete all the Data Subsetting Definition")
 
     - Click **Yes** to confirm.
 
